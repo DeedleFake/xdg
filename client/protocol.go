@@ -78,8 +78,10 @@ func (obj wmBaseObject) Delete() {
 // and will result in a defunct_surfaces error.
 func (obj wmBaseObject) Destroy() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     0,
+		Sender:    obj.id,
+		Op:        0,
+		Interface: "xdg_wm_base",
+		Method:    "destroy",
 	}
 
 	return &builder
@@ -90,8 +92,10 @@ func (obj wmBaseObject) Destroy() *wire.MessageBuilder {
 // and xdg_surface.get_popup for details.
 func (obj wmBaseObject) CreatePositioner(id uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     1,
+		Sender:    obj.id,
+		Op:        1,
+		Interface: "xdg_wm_base",
+		Method:    "create_positioner",
 	}
 
 	builder.WriteUint(id)
@@ -114,8 +118,10 @@ func (obj wmBaseObject) CreatePositioner(id uint32) *wire.MessageBuilder {
 // xdg_surface is and how it is used.
 func (obj wmBaseObject) GetXdgSurface(id uint32, surface uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     2,
+		Sender:    obj.id,
+		Op:        2,
+		Interface: "xdg_wm_base",
+		Method:    "get_xdg_surface",
 	}
 
 	builder.WriteUint(id)
@@ -129,8 +135,10 @@ func (obj wmBaseObject) GetXdgSurface(id uint32, surface uint32) *wire.MessageBu
 // and xdg_wm_base.error.unresponsive.
 func (obj wmBaseObject) Pong(serial uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     3,
+		Sender:    obj.id,
+		Op:        3,
+		Interface: "xdg_wm_base",
+		Method:    "pong",
 	}
 
 	builder.WriteUint(serial)
@@ -220,8 +228,10 @@ func (obj positionerObject) Delete() {
 // Notify the compositor that the xdg_positioner will no longer be used.
 func (obj positionerObject) Destroy() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     0,
+		Sender:    obj.id,
+		Op:        0,
+		Interface: "xdg_positioner",
+		Method:    "destroy",
 	}
 
 	return &builder
@@ -234,8 +244,10 @@ func (obj positionerObject) Destroy() *wire.MessageBuilder {
 // If a zero or negative size is set the invalid_input error is raised.
 func (obj positionerObject) SetSize(width int32, height int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     1,
+		Sender:    obj.id,
+		Op:        1,
+		Interface: "xdg_positioner",
+		Method:    "set_size",
 	}
 
 	builder.WriteInt(width)
@@ -256,8 +268,10 @@ func (obj positionerObject) SetSize(width int32, height int32) *wire.MessageBuil
 // If a negative size is set the invalid_input error is raised.
 func (obj positionerObject) SetAnchorRect(x int32, y int32, width int32, height int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     2,
+		Sender:    obj.id,
+		Op:        2,
+		Interface: "xdg_positioner",
+		Method:    "set_anchor_rect",
 	}
 
 	builder.WriteInt(x)
@@ -276,8 +290,10 @@ func (obj positionerObject) SetAnchorRect(x int32, y int32, width int32, height 
 // edge, or in the center of the anchor rectangle if no edge is specified.
 func (obj positionerObject) SetAnchor(anchor uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     3,
+		Sender:    obj.id,
+		Op:        3,
+		Interface: "xdg_positioner",
+		Method:    "set_anchor",
 	}
 
 	builder.WriteUint(anchor)
@@ -294,8 +310,10 @@ func (obj positionerObject) SetAnchor(anchor uint32) *wire.MessageBuilder {
 // invalid_input error is raised.
 func (obj positionerObject) SetGravity(gravity uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     4,
+		Sender:    obj.id,
+		Op:        4,
+		Interface: "xdg_positioner",
+		Method:    "set_gravity",
 	}
 
 	builder.WriteUint(gravity)
@@ -318,8 +336,10 @@ func (obj positionerObject) SetGravity(gravity uint32) *wire.MessageBuilder {
 // The default adjustment is none.
 func (obj positionerObject) SetConstraintAdjustment(constraintAdjustment uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     5,
+		Sender:    obj.id,
+		Op:        5,
+		Interface: "xdg_positioner",
+		Method:    "set_constraint_adjustment",
 	}
 
 	builder.WriteUint(constraintAdjustment)
@@ -340,8 +360,10 @@ func (obj positionerObject) SetConstraintAdjustment(constraintAdjustment uint32)
 // with some user interface element placed somewhere in the popup surface.
 func (obj positionerObject) SetOffset(x int32, y int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     6,
+		Sender:    obj.id,
+		Op:        6,
+		Interface: "xdg_positioner",
+		Method:    "set_offset",
 	}
 
 	builder.WriteInt(x)
@@ -358,8 +380,10 @@ func (obj positionerObject) SetOffset(x int32, y int32) *wire.MessageBuilder {
 // xdg_surface.configure event.
 func (obj positionerObject) SetReactive() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     7,
+		Sender:    obj.id,
+		Op:        7,
+		Interface: "xdg_positioner",
+		Method:    "set_reactive",
 	}
 
 	return &builder
@@ -374,8 +398,10 @@ func (obj positionerObject) SetReactive() *wire.MessageBuilder {
 // The arguments are given in the surface-local coordinate space.
 func (obj positionerObject) SetParentSize(parentWidth int32, parentHeight int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     8,
+		Sender:    obj.id,
+		Op:        8,
+		Interface: "xdg_positioner",
+		Method:    "set_parent_size",
 	}
 
 	builder.WriteInt(parentWidth)
@@ -390,8 +416,10 @@ func (obj positionerObject) SetParentSize(parentWidth int32, parentHeight int32)
 // constrained using.
 func (obj positionerObject) SetParentConfigure(serial uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     9,
+		Sender:    obj.id,
+		Op:        9,
+		Interface: "xdg_positioner",
+		Method:    "set_parent_configure",
 	}
 
 	builder.WriteUint(serial)
@@ -592,8 +620,10 @@ func (obj surfaceObject) Delete() {
 // a defunct_role_object error is raised.
 func (obj surfaceObject) Destroy() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     0,
+		Sender:    obj.id,
+		Op:        0,
+		Interface: "xdg_surface",
+		Method:    "destroy",
 	}
 
 	return &builder
@@ -606,8 +636,10 @@ func (obj surfaceObject) Destroy() *wire.MessageBuilder {
 // xdg_toplevel is and how it is used.
 func (obj surfaceObject) GetToplevel(id uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     1,
+		Sender:    obj.id,
+		Op:        1,
+		Interface: "xdg_surface",
+		Method:    "get_toplevel",
 	}
 
 	builder.WriteUint(id)
@@ -625,8 +657,10 @@ func (obj surfaceObject) GetToplevel(id uint32) *wire.MessageBuilder {
 // xdg_popup is and how it is used.
 func (obj surfaceObject) GetPopup(id uint32, parent uint32, positioner uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     2,
+		Sender:    obj.id,
+		Op:        2,
+		Interface: "xdg_surface",
+		Method:    "get_popup",
 	}
 
 	builder.WriteUint(id)
@@ -667,8 +701,10 @@ func (obj surfaceObject) GetPopup(id uint32, parent uint32, positioner uint32) *
 // the associated subsurfaces.
 func (obj surfaceObject) SetWindowGeometry(x int32, y int32, width int32, height int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     3,
+		Sender:    obj.id,
+		Op:        3,
+		Interface: "xdg_surface",
+		Method:    "set_window_geometry",
 	}
 
 	builder.WriteInt(x)
@@ -713,8 +749,10 @@ func (obj surfaceObject) SetWindowGeometry(x int32, y int32, width int32, height
 // xdg_surface. Doing so will raise an invalid_serial error.
 func (obj surfaceObject) AckConfigure(serial uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     4,
+		Sender:    obj.id,
+		Op:        4,
+		Interface: "xdg_surface",
+		Method:    "ack_configure",
 	}
 
 	builder.WriteUint(serial)
@@ -913,8 +951,10 @@ func (obj toplevelObject) Delete() {
 // see "Unmapping" behavior in interface section for details.
 func (obj toplevelObject) Destroy() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     0,
+		Sender:    obj.id,
+		Op:        0,
+		Interface: "xdg_toplevel",
+		Method:    "destroy",
 	}
 
 	return &builder
@@ -942,8 +982,10 @@ func (obj toplevelObject) Destroy() *wire.MessageBuilder {
 // otherwise the invalid_parent protocol error is raised.
 func (obj toplevelObject) SetParent(parent uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     1,
+		Sender:    obj.id,
+		Op:        1,
+		Interface: "xdg_toplevel",
+		Method:    "set_parent",
 	}
 
 	builder.WriteUint(parent)
@@ -960,8 +1002,10 @@ func (obj toplevelObject) SetParent(parent uint32) *wire.MessageBuilder {
 // The string must be encoded in UTF-8.
 func (obj toplevelObject) SetTitle(title string) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     2,
+		Sender:    obj.id,
+		Op:        2,
+		Interface: "xdg_toplevel",
+		Method:    "set_title",
 	}
 
 	builder.WriteString(title)
@@ -994,8 +1038,10 @@ func (obj toplevelObject) SetTitle(title string) *wire.MessageBuilder {
 // [0] https://standards.freedesktop.org/desktop-entry-spec/
 func (obj toplevelObject) SetAppId(appId string) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     3,
+		Sender:    obj.id,
+		Op:        3,
+		Interface: "xdg_toplevel",
+		Method:    "set_app_id",
 	}
 
 	builder.WriteString(appId)
@@ -1017,8 +1063,10 @@ func (obj toplevelObject) SetAppId(appId string) *wire.MessageBuilder {
 // like a button press, key press, or touch down event.
 func (obj toplevelObject) ShowWindowMenu(seat uint32, serial uint32, x int32, y int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     4,
+		Sender:    obj.id,
+		Op:        4,
+		Interface: "xdg_toplevel",
+		Method:    "show_window_menu",
 	}
 
 	builder.WriteUint(seat)
@@ -1047,8 +1095,10 @@ func (obj toplevelObject) ShowWindowMenu(seat uint32, serial uint32, x int32, y 
 // that the device focus will return when the move is completed.
 func (obj toplevelObject) Move(seat uint32, serial uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     5,
+		Sender:    obj.id,
+		Op:        5,
+		Interface: "xdg_toplevel",
+		Method:    "move",
 	}
 
 	builder.WriteUint(seat)
@@ -1090,8 +1140,10 @@ func (obj toplevelObject) Move(seat uint32, serial uint32) *wire.MessageBuilder 
 // cursor image.
 func (obj toplevelObject) Resize(seat uint32, serial uint32, edges uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     6,
+		Sender:    obj.id,
+		Op:        6,
+		Interface: "xdg_toplevel",
+		Method:    "resize",
 	}
 
 	builder.WriteUint(seat)
@@ -1137,8 +1189,10 @@ func (obj toplevelObject) Resize(seat uint32, serial uint32, edges uint32) *wire
 // invalid_size error.
 func (obj toplevelObject) SetMaxSize(width int32, height int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     7,
+		Sender:    obj.id,
+		Op:        7,
+		Interface: "xdg_toplevel",
+		Method:    "set_max_size",
 	}
 
 	builder.WriteInt(width)
@@ -1183,8 +1237,10 @@ func (obj toplevelObject) SetMaxSize(width int32, height int32) *wire.MessageBui
 // invalid_size error.
 func (obj toplevelObject) SetMinSize(width int32, height int32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     8,
+		Sender:    obj.id,
+		Op:        8,
+		Interface: "xdg_toplevel",
+		Method:    "set_min_size",
 	}
 
 	builder.WriteInt(width)
@@ -1214,8 +1270,10 @@ func (obj toplevelObject) SetMinSize(width int32, height int32) *wire.MessageBui
 // unmaximized unless overridden by the compositor.
 func (obj toplevelObject) SetMaximized() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     9,
+		Sender:    obj.id,
+		Op:        9,
+		Interface: "xdg_toplevel",
+		Method:    "set_maximized",
 	}
 
 	return &builder
@@ -1244,8 +1302,10 @@ func (obj toplevelObject) SetMaximized() *wire.MessageBuilder {
 // unmaximized unless overridden by the compositor.
 func (obj toplevelObject) UnsetMaximized() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     10,
+		Sender:    obj.id,
+		Op:        10,
+		Interface: "xdg_toplevel",
+		Method:    "unset_maximized",
 	}
 
 	return &builder
@@ -1276,8 +1336,10 @@ func (obj toplevelObject) UnsetMaximized() *wire.MessageBuilder {
 // visible below the fullscreened surface.
 func (obj toplevelObject) SetFullscreen(output uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     11,
+		Sender:    obj.id,
+		Op:        11,
+		Interface: "xdg_toplevel",
+		Method:    "set_fullscreen",
 	}
 
 	builder.WriteUint(output)
@@ -1304,8 +1366,10 @@ func (obj toplevelObject) SetFullscreen(output uint32) *wire.MessageBuilder {
 // content (see ack_configure).
 func (obj toplevelObject) UnsetFullscreen() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     12,
+		Sender:    obj.id,
+		Op:        12,
+		Interface: "xdg_toplevel",
+		Method:    "unset_fullscreen",
 	}
 
 	return &builder
@@ -1321,8 +1385,10 @@ func (obj toplevelObject) UnsetFullscreen() *wire.MessageBuilder {
 // similar compositor features.
 func (obj toplevelObject) SetMinimized() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     13,
+		Sender:    obj.id,
+		Op:        13,
+		Interface: "xdg_toplevel",
+		Method:    "set_minimized",
 	}
 
 	return &builder
@@ -1548,8 +1614,10 @@ func (obj popupObject) Delete() {
 // will be sent.
 func (obj popupObject) Destroy() *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     0,
+		Sender:    obj.id,
+		Op:        0,
+		Interface: "xdg_popup",
+		Method:    "destroy",
 	}
 
 	return &builder
@@ -1594,8 +1662,10 @@ func (obj popupObject) Destroy() *wire.MessageBuilder {
 // will always have keyboard focus.
 func (obj popupObject) Grab(seat uint32, serial uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     1,
+		Sender:    obj.id,
+		Op:        1,
+		Interface: "xdg_popup",
+		Method:    "grab",
 	}
 
 	builder.WriteUint(seat)
@@ -1629,8 +1699,10 @@ func (obj popupObject) Grab(seat uint32, serial uint32) *wire.MessageBuilder {
 // send an xdg_positioner.set_parent_size request.
 func (obj popupObject) Reposition(positioner uint32, token uint32) *wire.MessageBuilder {
 	builder := wire.MessageBuilder{
-		Sender: obj.id,
-		Op:     2,
+		Sender:    obj.id,
+		Op:        2,
+		Interface: "xdg_popup",
+		Method:    "reposition",
 	}
 
 	builder.WriteUint(positioner)
