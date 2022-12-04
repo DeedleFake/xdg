@@ -3,7 +3,7 @@ package xdg
 import wl "deedles.dev/wl/client"
 
 type WmBase struct {
-	obj     wmBaseObject
+	id[wmBaseObject]
 	display *wl.Display
 }
 
@@ -23,7 +23,13 @@ func BindWmBase(display *wl.Display, name uint32) *WmBase {
 }
 
 func (wm *WmBase) GetXdgSurface(surface *wl.Surface) *Surface {
-	panic("Not implemented.")
+	s := Surface{display: wm.display}
+	s.obj.listener = surfaceListener{surface: &s}
+	wm.display.AddObject(&s.obj)
+
+	wm.display.Enqueue(wm.obj.GetXdgSurface(s.obj.id, surface.ID()))
+
+	return &s
 }
 
 type wmBaseListener struct {

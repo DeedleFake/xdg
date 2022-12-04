@@ -57,6 +57,10 @@ func (obj wmBaseObject) Dispatch(msg *wire.MessageBuffer) error {
 	}
 }
 
+func (obj wmBaseObject) ID() uint32 {
+	return obj.id
+}
+
 func (obj *wmBaseObject) SetID(id uint32) {
 	obj.id = id
 }
@@ -197,6 +201,10 @@ func (obj positionerObject) Dispatch(msg *wire.MessageBuffer) error {
 		Type:      "event",
 		Op:        msg.Op(),
 	}
+}
+
+func (obj positionerObject) ID() uint32 {
+	return obj.id
 }
 
 func (obj *positionerObject) SetID(id uint32) {
@@ -565,6 +573,10 @@ func (obj surfaceObject) Dispatch(msg *wire.MessageBuffer) error {
 	}
 }
 
+func (obj surfaceObject) ID() uint32 {
+	return obj.id
+}
+
 func (obj *surfaceObject) SetID(id uint32) {
 	obj.id = id
 }
@@ -881,6 +893,10 @@ func (obj toplevelObject) Dispatch(msg *wire.MessageBuffer) error {
 		Type:      "event",
 		Op:        msg.Op(),
 	}
+}
+
+func (obj toplevelObject) ID() uint32 {
+	return obj.id
 }
 
 func (obj *toplevelObject) SetID(id uint32) {
@@ -1509,6 +1525,10 @@ func (obj popupObject) Dispatch(msg *wire.MessageBuffer) error {
 		Type:      "event",
 		Op:        msg.Op(),
 	}
+}
+
+func (obj popupObject) ID() uint32 {
+	return obj.id
 }
 
 func (obj *popupObject) SetID(id uint32) {
