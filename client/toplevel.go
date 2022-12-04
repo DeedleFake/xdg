@@ -7,6 +7,10 @@ type Toplevel struct {
 	display *wl.Display
 }
 
+func (tl *Toplevel) SetTitle(title string) {
+	tl.display.Enqueue(tl.obj.SetTitle(title))
+}
+
 type toplevelListener struct {
 	tl *Toplevel
 }
