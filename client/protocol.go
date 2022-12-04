@@ -76,6 +76,15 @@ func (obj wmBaseObject) String() string {
 	return fmt.Sprintf("%v(%v)", "xdg_wm_base", obj.id)
 }
 
+func (obj wmBaseObject) MethodName(op uint16) string {
+	switch op {
+	case 0:
+		return "ping"
+	}
+
+	return "unknown method"
+}
+
 // Destroy this xdg_wm_base object.
 //
 // Destroying a bound xdg_wm_base object while there are surfaces
@@ -232,6 +241,13 @@ func (obj positionerObject) Delete() {
 
 func (obj positionerObject) String() string {
 	return fmt.Sprintf("%v(%v)", "xdg_positioner", obj.id)
+}
+
+func (obj positionerObject) MethodName(op uint16) string {
+	switch op {
+	}
+
+	return "unknown method"
 }
 
 // Notify the compositor that the xdg_positioner will no longer be used.
@@ -628,6 +644,15 @@ func (obj surfaceObject) String() string {
 	return fmt.Sprintf("%v(%v)", "xdg_surface", obj.id)
 }
 
+func (obj surfaceObject) MethodName(op uint16) string {
+	switch op {
+	case 0:
+		return "configure"
+	}
+
+	return "unknown method"
+}
+
 // Destroy the xdg_surface object. An xdg_surface must only be destroyed
 // after its role object has been destroyed, otherwise
 // a defunct_role_object error is raised.
@@ -962,6 +987,24 @@ func (obj toplevelObject) Delete() {
 
 func (obj toplevelObject) String() string {
 	return fmt.Sprintf("%v(%v)", "xdg_toplevel", obj.id)
+}
+
+func (obj toplevelObject) MethodName(op uint16) string {
+	switch op {
+	case 0:
+		return "configure"
+
+	case 1:
+		return "close"
+
+	case 2:
+		return "configure_bounds"
+
+	case 3:
+		return "wm_capabilities"
+	}
+
+	return "unknown method"
 }
 
 // This request destroys the role surface and unmaps the surface;
@@ -1626,6 +1669,21 @@ func (obj popupObject) Delete() {
 
 func (obj popupObject) String() string {
 	return fmt.Sprintf("%v(%v)", "xdg_popup", obj.id)
+}
+
+func (obj popupObject) MethodName(op uint16) string {
+	switch op {
+	case 0:
+		return "configure"
+
+	case 1:
+		return "popup_done"
+
+	case 2:
+		return "repositioned"
+	}
+
+	return "unknown method"
 }
 
 // This destroys the popup. Explicitly destroying the xdg_popup
