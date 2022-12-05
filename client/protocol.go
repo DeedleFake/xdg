@@ -173,6 +173,33 @@ const (
 	WmBaseErrorUnresponsive WmBaseError = 6
 )
 
+func (enum WmBaseError) String() string {
+	switch enum {
+	case 0:
+		return "WmBaseErrorRole"
+
+	case 1:
+		return "WmBaseErrorDefunctSurfaces"
+
+	case 2:
+		return "WmBaseErrorNotTheTopmostPopup"
+
+	case 3:
+		return "WmBaseErrorInvalidPopupParent"
+
+	case 4:
+		return "WmBaseErrorInvalidSurfaceState"
+
+	case 5:
+		return "WmBaseErrorInvalidPositioner"
+
+	case 6:
+		return "WmBaseErrorUnresponsive"
+	}
+
+	return "<invalid WmBaseError>"
+}
+
 const (
 	positionerInterface = "xdg_positioner"
 	positionerVersion   = 5
@@ -417,6 +444,15 @@ const (
 	PositionerErrorInvalidInput PositionerError = 0
 )
 
+func (enum PositionerError) String() string {
+	switch enum {
+	case 0:
+		return "PositionerErrorInvalidInput"
+	}
+
+	return "<invalid PositionerError>"
+}
+
 type PositionerAnchor int64
 
 const (
@@ -439,6 +475,39 @@ const (
 	PositionerAnchorBottomRight PositionerAnchor = 8
 )
 
+func (enum PositionerAnchor) String() string {
+	switch enum {
+	case 0:
+		return "PositionerAnchorNone"
+
+	case 1:
+		return "PositionerAnchorTop"
+
+	case 2:
+		return "PositionerAnchorBottom"
+
+	case 3:
+		return "PositionerAnchorLeft"
+
+	case 4:
+		return "PositionerAnchorRight"
+
+	case 5:
+		return "PositionerAnchorTopLeft"
+
+	case 6:
+		return "PositionerAnchorBottomLeft"
+
+	case 7:
+		return "PositionerAnchorTopRight"
+
+	case 8:
+		return "PositionerAnchorBottomRight"
+	}
+
+	return "<invalid PositionerAnchor>"
+}
+
 type PositionerGravity int64
 
 const (
@@ -460,6 +529,39 @@ const (
 
 	PositionerGravityBottomRight PositionerGravity = 8
 )
+
+func (enum PositionerGravity) String() string {
+	switch enum {
+	case 0:
+		return "PositionerGravityNone"
+
+	case 1:
+		return "PositionerGravityTop"
+
+	case 2:
+		return "PositionerGravityBottom"
+
+	case 3:
+		return "PositionerGravityLeft"
+
+	case 4:
+		return "PositionerGravityRight"
+
+	case 5:
+		return "PositionerGravityTopLeft"
+
+	case 6:
+		return "PositionerGravityBottomLeft"
+
+	case 7:
+		return "PositionerGravityTopRight"
+
+	case 8:
+		return "PositionerGravityBottomRight"
+	}
+
+	return "<invalid PositionerGravity>"
+}
 
 // The constraint adjustment value define ways the compositor will adjust
 // the position of the surface, if the unadjusted position would result
@@ -489,6 +591,33 @@ const (
 
 	PositionerConstraintAdjustmentResizeY PositionerConstraintAdjustment = 32
 )
+
+func (enum PositionerConstraintAdjustment) String() string {
+	switch enum {
+	case 0:
+		return "PositionerConstraintAdjustmentNone"
+
+	case 1:
+		return "PositionerConstraintAdjustmentSlideX"
+
+	case 2:
+		return "PositionerConstraintAdjustmentSlideY"
+
+	case 4:
+		return "PositionerConstraintAdjustmentFlipX"
+
+	case 8:
+		return "PositionerConstraintAdjustmentFlipY"
+
+	case 16:
+		return "PositionerConstraintAdjustmentResizeX"
+
+	case 32:
+		return "PositionerConstraintAdjustmentResizeY"
+	}
+
+	return "<invalid PositionerConstraintAdjustment>"
+}
 
 const (
 	surfaceInterface = "xdg_surface"
@@ -762,6 +891,30 @@ const (
 	// Surface was destroyed before its role object
 	SurfaceErrorDefunctRoleObject SurfaceError = 6
 )
+
+func (enum SurfaceError) String() string {
+	switch enum {
+	case 1:
+		return "SurfaceErrorNotConstructed"
+
+	case 2:
+		return "SurfaceErrorAlreadyConstructed"
+
+	case 3:
+		return "SurfaceErrorUnconfiguredBuffer"
+
+	case 4:
+		return "SurfaceErrorInvalidSerial"
+
+	case 5:
+		return "SurfaceErrorInvalidSize"
+
+	case 6:
+		return "SurfaceErrorDefunctRoleObject"
+	}
+
+	return "<invalid SurfaceError>"
+}
 
 const (
 	toplevelInterface = "xdg_toplevel"
@@ -1369,6 +1522,21 @@ const (
 	ToplevelErrorInvalidSize ToplevelError = 2
 )
 
+func (enum ToplevelError) String() string {
+	switch enum {
+	case 0:
+		return "ToplevelErrorInvalidResizeEdge"
+
+	case 1:
+		return "ToplevelErrorInvalidParent"
+
+	case 2:
+		return "ToplevelErrorInvalidSize"
+	}
+
+	return "<invalid ToplevelError>"
+}
+
 // These values are used to indicate which edge of a surface
 // is being dragged in a resize operation.
 type ToplevelResizeEdge int64
@@ -1392,6 +1560,39 @@ const (
 
 	ToplevelResizeEdgeBottomRight ToplevelResizeEdge = 10
 )
+
+func (enum ToplevelResizeEdge) String() string {
+	switch enum {
+	case 0:
+		return "ToplevelResizeEdgeNone"
+
+	case 1:
+		return "ToplevelResizeEdgeTop"
+
+	case 2:
+		return "ToplevelResizeEdgeBottom"
+
+	case 4:
+		return "ToplevelResizeEdgeLeft"
+
+	case 5:
+		return "ToplevelResizeEdgeTopLeft"
+
+	case 6:
+		return "ToplevelResizeEdgeBottomLeft"
+
+	case 8:
+		return "ToplevelResizeEdgeRight"
+
+	case 9:
+		return "ToplevelResizeEdgeTopRight"
+
+	case 10:
+		return "ToplevelResizeEdgeBottomRight"
+	}
+
+	return "<invalid ToplevelResizeEdge>"
+}
 
 // The different state values used on the surface. This is designed for
 // state values like maximized, fullscreen. It is paired with the
@@ -1424,6 +1625,36 @@ const (
 	ToplevelStateTiledBottom ToplevelState = 8
 )
 
+func (enum ToplevelState) String() string {
+	switch enum {
+	case 1:
+		return "ToplevelStateMaximized"
+
+	case 2:
+		return "ToplevelStateFullscreen"
+
+	case 3:
+		return "ToplevelStateResizing"
+
+	case 4:
+		return "ToplevelStateActivated"
+
+	case 5:
+		return "ToplevelStateTiledLeft"
+
+	case 6:
+		return "ToplevelStateTiledRight"
+
+	case 7:
+		return "ToplevelStateTiledTop"
+
+	case 8:
+		return "ToplevelStateTiledBottom"
+	}
+
+	return "<invalid ToplevelState>"
+}
+
 type ToplevelWmCapabilities int64
 
 const (
@@ -1439,6 +1670,24 @@ const (
 	// set_minimized is available
 	ToplevelWmCapabilitiesMinimize ToplevelWmCapabilities = 4
 )
+
+func (enum ToplevelWmCapabilities) String() string {
+	switch enum {
+	case 1:
+		return "ToplevelWmCapabilitiesWindowMenu"
+
+	case 2:
+		return "ToplevelWmCapabilitiesMaximize"
+
+	case 3:
+		return "ToplevelWmCapabilitiesFullscreen"
+
+	case 4:
+		return "ToplevelWmCapabilitiesMinimize"
+	}
+
+	return "<invalid ToplevelWmCapabilities>"
+}
 
 const (
 	popupInterface = "xdg_popup"
@@ -1688,3 +1937,12 @@ const (
 	// tried to grab after being mapped
 	PopupErrorInvalidGrab PopupError = 0
 )
+
+func (enum PopupError) String() string {
+	switch enum {
+	case 0:
+		return "PopupErrorInvalidGrab"
+	}
+
+	return "<invalid PopupError>"
+}
