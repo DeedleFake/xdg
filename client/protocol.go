@@ -91,30 +91,24 @@ func (obj wmBaseObject) MethodName(op uint16) string {
 // still alive created by this xdg_wm_base object instance is illegal
 // and will result in a defunct_surfaces error.
 func (obj wmBaseObject) Destroy() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     0,
-		Method: "destroy",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 0)
+	builder.Method = "destroy"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Create a positioner object. A positioner object is used to position
 // surfaces relative to some parent surface. See the interface description
 // and xdg_surface.get_popup for details.
 func (obj wmBaseObject) CreatePositioner(id uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     1,
-		Method: "create_positioner",
-		Args:   []any{id},
-	}
+	builder := wire.NewMessage(&obj, 1)
+	builder.Method = "create_positioner"
+	builder.Args = []any{id}
 
 	builder.WriteUint(id)
 
-	return &builder
+	return builder
 }
 
 // This creates an xdg_surface for the given surface. While xdg_surface
@@ -131,33 +125,27 @@ func (obj wmBaseObject) CreatePositioner(id uint32) *wire.MessageBuilder {
 // See the documentation of xdg_surface for more details about what an
 // xdg_surface is and how it is used.
 func (obj wmBaseObject) GetXdgSurface(id uint32, surface uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     2,
-		Method: "get_xdg_surface",
-		Args:   []any{id, surface},
-	}
+	builder := wire.NewMessage(&obj, 2)
+	builder.Method = "get_xdg_surface"
+	builder.Args = []any{id, surface}
 
 	builder.WriteUint(id)
 	builder.WriteUint(surface)
 
-	return &builder
+	return builder
 }
 
 // A client must respond to a ping event with a pong request or
 // the client may be deemed unresponsive. See xdg_wm_base.ping
 // and xdg_wm_base.error.unresponsive.
 func (obj wmBaseObject) Pong(serial uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     3,
-		Method: "pong",
-		Args:   []any{serial},
-	}
+	builder := wire.NewMessage(&obj, 3)
+	builder.Method = "pong"
+	builder.Args = []any{serial}
 
 	builder.WriteUint(serial)
 
-	return &builder
+	return builder
 }
 
 type WmBaseError int64
@@ -252,14 +240,11 @@ func (obj positionerObject) MethodName(op uint16) string {
 
 // Notify the compositor that the xdg_positioner will no longer be used.
 func (obj positionerObject) Destroy() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     0,
-		Method: "destroy",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 0)
+	builder.Method = "destroy"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Set the size of the surface that is to be positioned with the positioner
@@ -268,17 +253,14 @@ func (obj positionerObject) Destroy() *wire.MessageBuilder {
 //
 // If a zero or negative size is set the invalid_input error is raised.
 func (obj positionerObject) SetSize(width int32, height int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     1,
-		Method: "set_size",
-		Args:   []any{width, height},
-	}
+	builder := wire.NewMessage(&obj, 1)
+	builder.Method = "set_size"
+	builder.Args = []any{width, height}
 
 	builder.WriteInt(width)
 	builder.WriteInt(height)
 
-	return &builder
+	return builder
 }
 
 // Specify the anchor rectangle within the parent surface that the child
@@ -292,19 +274,16 @@ func (obj positionerObject) SetSize(width int32, height int32) *wire.MessageBuil
 //
 // If a negative size is set the invalid_input error is raised.
 func (obj positionerObject) SetAnchorRect(x int32, y int32, width int32, height int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     2,
-		Method: "set_anchor_rect",
-		Args:   []any{x, y, width, height},
-	}
+	builder := wire.NewMessage(&obj, 2)
+	builder.Method = "set_anchor_rect"
+	builder.Args = []any{x, y, width, height}
 
 	builder.WriteInt(x)
 	builder.WriteInt(y)
 	builder.WriteInt(width)
 	builder.WriteInt(height)
 
-	return &builder
+	return builder
 }
 
 // Defines the anchor point for the anchor rectangle. The specified anchor
@@ -314,16 +293,13 @@ func (obj positionerObject) SetAnchorRect(x int32, y int32, width int32, height 
 // otherwise, the derived anchor point will be centered on the specified
 // edge, or in the center of the anchor rectangle if no edge is specified.
 func (obj positionerObject) SetAnchor(anchor uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     3,
-		Method: "set_anchor",
-		Args:   []any{anchor},
-	}
+	builder := wire.NewMessage(&obj, 3)
+	builder.Method = "set_anchor"
+	builder.Args = []any{anchor}
 
 	builder.WriteUint(anchor)
 
-	return &builder
+	return builder
 }
 
 // Defines in what direction a surface should be positioned, relative to
@@ -334,16 +310,13 @@ func (obj positionerObject) SetAnchor(anchor uint32) *wire.MessageBuilder {
 // gravity specified. If the gravity is not in the ‘gravity’ enum, an
 // invalid_input error is raised.
 func (obj positionerObject) SetGravity(gravity uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     4,
-		Method: "set_gravity",
-		Args:   []any{gravity},
-	}
+	builder := wire.NewMessage(&obj, 4)
+	builder.Method = "set_gravity"
+	builder.Args = []any{gravity}
 
 	builder.WriteUint(gravity)
 
-	return &builder
+	return builder
 }
 
 // Specify how the window should be positioned if the originally intended
@@ -360,16 +333,13 @@ func (obj positionerObject) SetGravity(gravity uint32) *wire.MessageBuilder {
 //
 // The default adjustment is none.
 func (obj positionerObject) SetConstraintAdjustment(constraintAdjustment uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     5,
-		Method: "set_constraint_adjustment",
-		Args:   []any{constraintAdjustment},
-	}
+	builder := wire.NewMessage(&obj, 5)
+	builder.Method = "set_constraint_adjustment"
+	builder.Args = []any{constraintAdjustment}
 
 	builder.WriteUint(constraintAdjustment)
 
-	return &builder
+	return builder
 }
 
 // Specify the surface position offset relative to the position of the
@@ -384,17 +354,14 @@ func (obj positionerObject) SetConstraintAdjustment(constraintAdjustment uint32)
 // element, while aligning the user interface element of the parent surface
 // with some user interface element placed somewhere in the popup surface.
 func (obj positionerObject) SetOffset(x int32, y int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     6,
-		Method: "set_offset",
-		Args:   []any{x, y},
-	}
+	builder := wire.NewMessage(&obj, 6)
+	builder.Method = "set_offset"
+	builder.Args = []any{x, y}
 
 	builder.WriteInt(x)
 	builder.WriteInt(y)
 
-	return &builder
+	return builder
 }
 
 // When set reactive, the surface is reconstrained if the conditions used
@@ -404,14 +371,11 @@ func (obj positionerObject) SetOffset(x int32, y int32) *wire.MessageBuilder {
 // xdg_popup.configure event is sent with updated geometry, followed by an
 // xdg_surface.configure event.
 func (obj positionerObject) SetReactive() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     7,
-		Method: "set_reactive",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 7)
+	builder.Method = "set_reactive"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Set the parent window geometry the compositor should use when
@@ -422,17 +386,14 @@ func (obj positionerObject) SetReactive() *wire.MessageBuilder {
 //
 // The arguments are given in the surface-local coordinate space.
 func (obj positionerObject) SetParentSize(parentWidth int32, parentHeight int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     8,
-		Method: "set_parent_size",
-		Args:   []any{parentWidth, parentHeight},
-	}
+	builder := wire.NewMessage(&obj, 8)
+	builder.Method = "set_parent_size"
+	builder.Args = []any{parentWidth, parentHeight}
 
 	builder.WriteInt(parentWidth)
 	builder.WriteInt(parentHeight)
 
-	return &builder
+	return builder
 }
 
 // Set the serial of an xdg_surface.configure event this positioner will be
@@ -440,16 +401,13 @@ func (obj positionerObject) SetParentSize(parentWidth int32, parentHeight int32)
 // with set_parent_size to determine what future state the popup should be
 // constrained using.
 func (obj positionerObject) SetParentConfigure(serial uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     9,
-		Method: "set_parent_configure",
-		Args:   []any{serial},
-	}
+	builder := wire.NewMessage(&obj, 9)
+	builder.Method = "set_parent_configure"
+	builder.Args = []any{serial}
 
 	builder.WriteUint(serial)
 
-	return &builder
+	return builder
 }
 
 type PositionerError int64
@@ -657,14 +615,11 @@ func (obj surfaceObject) MethodName(op uint16) string {
 // after its role object has been destroyed, otherwise
 // a defunct_role_object error is raised.
 func (obj surfaceObject) Destroy() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     0,
-		Method: "destroy",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 0)
+	builder.Method = "destroy"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // This creates an xdg_toplevel object for the given xdg_surface and gives
@@ -673,16 +628,13 @@ func (obj surfaceObject) Destroy() *wire.MessageBuilder {
 // See the documentation of xdg_toplevel for more details about what an
 // xdg_toplevel is and how it is used.
 func (obj surfaceObject) GetToplevel(id uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     1,
-		Method: "get_toplevel",
-		Args:   []any{id},
-	}
+	builder := wire.NewMessage(&obj, 1)
+	builder.Method = "get_toplevel"
+	builder.Args = []any{id}
 
 	builder.WriteUint(id)
 
-	return &builder
+	return builder
 }
 
 // This creates an xdg_popup object for the given xdg_surface and gives
@@ -694,18 +646,15 @@ func (obj surfaceObject) GetToplevel(id uint32) *wire.MessageBuilder {
 // See the documentation of xdg_popup for more details about what an
 // xdg_popup is and how it is used.
 func (obj surfaceObject) GetPopup(id uint32, parent uint32, positioner uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     2,
-		Method: "get_popup",
-		Args:   []any{id, parent, positioner},
-	}
+	builder := wire.NewMessage(&obj, 2)
+	builder.Method = "get_popup"
+	builder.Args = []any{id, parent, positioner}
 
 	builder.WriteUint(id)
 	builder.WriteUint(parent)
 	builder.WriteUint(positioner)
 
-	return &builder
+	return builder
 }
 
 // The window geometry of a surface is its "visible bounds" from the
@@ -738,19 +687,16 @@ func (obj surfaceObject) GetPopup(id uint32, parent uint32, positioner uint32) *
 // rectangle of the combined geometry of the surface of the xdg_surface and
 // the associated subsurfaces.
 func (obj surfaceObject) SetWindowGeometry(x int32, y int32, width int32, height int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     3,
-		Method: "set_window_geometry",
-		Args:   []any{x, y, width, height},
-	}
+	builder := wire.NewMessage(&obj, 3)
+	builder.Method = "set_window_geometry"
+	builder.Args = []any{x, y, width, height}
 
 	builder.WriteInt(x)
 	builder.WriteInt(y)
 	builder.WriteInt(width)
 	builder.WriteInt(height)
 
-	return &builder
+	return builder
 }
 
 // When a configure event is received, if a client commits the
@@ -786,16 +732,13 @@ func (obj surfaceObject) SetWindowGeometry(x int32, y int32, width int32, height
 // event identified by the last ack_configure request for the same
 // xdg_surface. Doing so will raise an invalid_serial error.
 func (obj surfaceObject) AckConfigure(serial uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     4,
-		Method: "ack_configure",
-		Args:   []any{serial},
-	}
+	builder := wire.NewMessage(&obj, 4)
+	builder.Method = "ack_configure"
+	builder.Args = []any{serial}
 
 	builder.WriteUint(serial)
 
-	return &builder
+	return builder
 }
 
 type SurfaceError int64
@@ -1010,14 +953,11 @@ func (obj toplevelObject) MethodName(op uint16) string {
 // This request destroys the role surface and unmaps the surface;
 // see "Unmapping" behavior in interface section for details.
 func (obj toplevelObject) Destroy() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     0,
-		Method: "destroy",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 0)
+	builder.Method = "destroy"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Set the "parent" of this surface. This surface should be stacked
@@ -1041,16 +981,13 @@ func (obj toplevelObject) Destroy() *wire.MessageBuilder {
 // descendants, and the parent must be different from the child toplevel,
 // otherwise the invalid_parent protocol error is raised.
 func (obj toplevelObject) SetParent(parent uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     1,
-		Method: "set_parent",
-		Args:   []any{parent},
-	}
+	builder := wire.NewMessage(&obj, 1)
+	builder.Method = "set_parent"
+	builder.Args = []any{parent}
 
 	builder.WriteUint(parent)
 
-	return &builder
+	return builder
 }
 
 // Set a short title for the surface.
@@ -1061,16 +998,13 @@ func (obj toplevelObject) SetParent(parent uint32) *wire.MessageBuilder {
 //
 // The string must be encoded in UTF-8.
 func (obj toplevelObject) SetTitle(title string) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     2,
-		Method: "set_title",
-		Args:   []any{title},
-	}
+	builder := wire.NewMessage(&obj, 2)
+	builder.Method = "set_title"
+	builder.Args = []any{title}
 
 	builder.WriteString(title)
 
-	return &builder
+	return builder
 }
 
 // Set an application identifier for the surface.
@@ -1097,16 +1031,13 @@ func (obj toplevelObject) SetTitle(title string) *wire.MessageBuilder {
 //
 // [0] https://standards.freedesktop.org/desktop-entry-spec/
 func (obj toplevelObject) SetAppId(appId string) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     3,
-		Method: "set_app_id",
-		Args:   []any{appId},
-	}
+	builder := wire.NewMessage(&obj, 3)
+	builder.Method = "set_app_id"
+	builder.Args = []any{appId}
 
 	builder.WriteString(appId)
 
-	return &builder
+	return builder
 }
 
 // Clients implementing client-side decorations might want to show
@@ -1122,19 +1053,16 @@ func (obj toplevelObject) SetAppId(appId string) *wire.MessageBuilder {
 // This request must be used in response to some sort of user action
 // like a button press, key press, or touch down event.
 func (obj toplevelObject) ShowWindowMenu(seat uint32, serial uint32, x int32, y int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     4,
-		Method: "show_window_menu",
-		Args:   []any{seat, serial, x, y},
-	}
+	builder := wire.NewMessage(&obj, 4)
+	builder.Method = "show_window_menu"
+	builder.Args = []any{seat, serial, x, y}
 
 	builder.WriteUint(seat)
 	builder.WriteUint(serial)
 	builder.WriteInt(x)
 	builder.WriteInt(y)
 
-	return &builder
+	return builder
 }
 
 // Start an interactive, user-driven move of the surface.
@@ -1154,17 +1082,14 @@ func (obj toplevelObject) ShowWindowMenu(seat uint32, serial uint32, x int32, y 
 // updating a pointer cursor, during the move. There is no guarantee
 // that the device focus will return when the move is completed.
 func (obj toplevelObject) Move(seat uint32, serial uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     5,
-		Method: "move",
-		Args:   []any{seat, serial},
-	}
+	builder := wire.NewMessage(&obj, 5)
+	builder.Method = "move"
+	builder.Args = []any{seat, serial}
 
 	builder.WriteUint(seat)
 	builder.WriteUint(serial)
 
-	return &builder
+	return builder
 }
 
 // Start a user-driven, interactive resize of the surface.
@@ -1199,18 +1124,15 @@ func (obj toplevelObject) Move(seat uint32, serial uint32) *wire.MessageBuilder 
 // this information to adapt its behavior, e.g. choose an appropriate
 // cursor image.
 func (obj toplevelObject) Resize(seat uint32, serial uint32, edges uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     6,
-		Method: "resize",
-		Args:   []any{seat, serial, edges},
-	}
+	builder := wire.NewMessage(&obj, 6)
+	builder.Method = "resize"
+	builder.Args = []any{seat, serial, edges}
 
 	builder.WriteUint(seat)
 	builder.WriteUint(serial)
 	builder.WriteUint(edges)
 
-	return &builder
+	return builder
 }
 
 // Set a maximum size for the window.
@@ -1248,17 +1170,14 @@ func (obj toplevelObject) Resize(seat uint32, serial uint32, edges uint32) *wire
 // strictly negative values for width or height will result in a
 // invalid_size error.
 func (obj toplevelObject) SetMaxSize(width int32, height int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     7,
-		Method: "set_max_size",
-		Args:   []any{width, height},
-	}
+	builder := wire.NewMessage(&obj, 7)
+	builder.Method = "set_max_size"
+	builder.Args = []any{width, height}
 
 	builder.WriteInt(width)
 	builder.WriteInt(height)
 
-	return &builder
+	return builder
 }
 
 // Set a minimum size for the window.
@@ -1296,17 +1215,14 @@ func (obj toplevelObject) SetMaxSize(width int32, height int32) *wire.MessageBui
 // strictly negative values for width and height will result in a
 // invalid_size error.
 func (obj toplevelObject) SetMinSize(width int32, height int32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     8,
-		Method: "set_min_size",
-		Args:   []any{width, height},
-	}
+	builder := wire.NewMessage(&obj, 8)
+	builder.Method = "set_min_size"
+	builder.Args = []any{width, height}
 
 	builder.WriteInt(width)
 	builder.WriteInt(height)
 
-	return &builder
+	return builder
 }
 
 // Maximize the surface.
@@ -1329,14 +1245,11 @@ func (obj toplevelObject) SetMinSize(width int32, height int32) *wire.MessageBui
 // effect. It may alter the state the surface is returned to when
 // unmaximized unless overridden by the compositor.
 func (obj toplevelObject) SetMaximized() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     9,
-		Method: "set_maximized",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 9)
+	builder.Method = "set_maximized"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Unmaximize the surface.
@@ -1361,14 +1274,11 @@ func (obj toplevelObject) SetMaximized() *wire.MessageBuilder {
 // effect. It may alter the state the surface is returned to when
 // unmaximized unless overridden by the compositor.
 func (obj toplevelObject) UnsetMaximized() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     10,
-		Method: "unset_maximized",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 10)
+	builder.Method = "unset_maximized"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Make the surface fullscreen.
@@ -1395,16 +1305,13 @@ func (obj toplevelObject) UnsetMaximized() *wire.MessageBuilder {
 // up of subsurfaces, popups or similarly coupled surfaces) are not
 // visible below the fullscreened surface.
 func (obj toplevelObject) SetFullscreen(output uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     11,
-		Method: "set_fullscreen",
-		Args:   []any{output},
-	}
+	builder := wire.NewMessage(&obj, 11)
+	builder.Method = "set_fullscreen"
+	builder.Args = []any{output}
 
 	builder.WriteUint(output)
 
-	return &builder
+	return builder
 }
 
 // Make the surface no longer fullscreen.
@@ -1425,14 +1332,11 @@ func (obj toplevelObject) SetFullscreen(output uint32) *wire.MessageBuilder {
 // The client must also acknowledge the configure when committing the new
 // content (see ack_configure).
 func (obj toplevelObject) UnsetFullscreen() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     12,
-		Method: "unset_fullscreen",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 12)
+	builder.Method = "unset_fullscreen"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // Request that the compositor minimize your surface. There is no
@@ -1444,14 +1348,11 @@ func (obj toplevelObject) UnsetFullscreen() *wire.MessageBuilder {
 // also work with live previews on windows in Alt-Tab, Expose or
 // similar compositor features.
 func (obj toplevelObject) SetMinimized() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     13,
-		Method: "set_minimized",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 13)
+	builder.Method = "set_minimized"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 type ToplevelError int64
@@ -1692,14 +1593,11 @@ func (obj popupObject) MethodName(op uint16) string {
 // If this xdg_popup is not the "topmost" popup, a protocol error
 // will be sent.
 func (obj popupObject) Destroy() *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     0,
-		Method: "destroy",
-		Args:   []any{},
-	}
+	builder := wire.NewMessage(&obj, 0)
+	builder.Method = "destroy"
+	builder.Args = []any{}
 
-	return &builder
+	return builder
 }
 
 // This request makes the created popup take an explicit grab. An explicit
@@ -1740,17 +1638,14 @@ func (obj popupObject) Destroy() *wire.MessageBuilder {
 // "owner-events" grab in X11 parlance), while the top most grabbing popup
 // will always have keyboard focus.
 func (obj popupObject) Grab(seat uint32, serial uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     1,
-		Method: "grab",
-		Args:   []any{seat, serial},
-	}
+	builder := wire.NewMessage(&obj, 1)
+	builder.Method = "grab"
+	builder.Args = []any{seat, serial}
 
 	builder.WriteUint(seat)
 	builder.WriteUint(serial)
 
-	return &builder
+	return builder
 }
 
 // Reposition an already-mapped popup. The popup will be placed given the
@@ -1777,17 +1672,14 @@ func (obj popupObject) Grab(seat uint32, serial uint32) *wire.MessageBuilder {
 // resized, but not in response to a configure event, the client should
 // send an xdg_positioner.set_parent_size request.
 func (obj popupObject) Reposition(positioner uint32, token uint32) *wire.MessageBuilder {
-	builder := wire.MessageBuilder{
-		Sender: &obj,
-		Op:     2,
-		Method: "reposition",
-		Args:   []any{positioner, token},
-	}
+	builder := wire.NewMessage(&obj, 2)
+	builder.Method = "reposition"
+	builder.Args = []any{positioner, token}
 
 	builder.WriteUint(positioner)
 	builder.WriteUint(token)
 
-	return &builder
+	return builder
 }
 
 type PopupError int64
