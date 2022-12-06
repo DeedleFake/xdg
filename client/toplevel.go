@@ -27,6 +27,18 @@ func (tl *Toplevel) Move(seat *wl.Seat, serial uint32) {
 	tl.display.Enqueue(tl.obj.Move(seat.Object().ID(), serial))
 }
 
+func (tl *Toplevel) SetMaximized(v bool) {
+	if v {
+		tl.display.Enqueue(tl.obj.SetMaximized())
+		return
+	}
+	tl.display.Enqueue(tl.obj.UnsetMaximized())
+}
+
+func (tl *Toplevel) SetMinimized() {
+	tl.display.Enqueue(tl.obj.SetMinimized())
+}
+
 type toplevelListener struct {
 	tl *Toplevel
 }
