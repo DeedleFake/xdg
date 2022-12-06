@@ -1,11 +1,13 @@
 package xdg
 
 import (
+	"deedles.dev/wl/bin"
 	wl "deedles.dev/wl/client"
 	"deedles.dev/wl/wire"
 )
 
 type Toplevel struct {
+	Configure       func(w, h int32, states []ToplevelState)
 	Close           func()
 	ConfigureBounds func(width, height int32)
 
@@ -30,7 +32,13 @@ type toplevelListener struct {
 }
 
 func (lis toplevelListener) Configure(width, height int32, states []byte) {
-	// TODO
+	if lis.tl.Configure != nil {
+		s := make([]ToplevelState, 0, len(states)/4)
+		for i := 4; i <= len(states); i += 4 {
+			s = append(s, ToplevelState(bin.Value[uint32](*(*[4]byte)(states[i-4 : i]))))
+		}
+		lis.tl.Configure(width, height, s)
+	}
 }
 
 func (lis toplevelListener) Close() {
