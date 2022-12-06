@@ -14,13 +14,13 @@ func IsWmBase(i wl.Interface) bool {
 	return i.Is(wmBaseInterface, wmBaseVersion)
 }
 
-func BindWmBase(display *wl.Display, name uint32) *WmBase {
+func BindWmBase(display *wl.Display, name, version uint32) *WmBase {
 	wm := WmBase{display: display}
 	wm.obj.listener = wmBaseListener{wm: &wm}
 	display.AddObject(&wm)
 
 	registry := display.GetRegistry()
-	registry.Bind(name, wmBaseInterface, wmBaseVersion, wm.obj.id)
+	registry.Bind(name, wmBaseInterface, version, wm.obj.id)
 
 	return &wm
 }
