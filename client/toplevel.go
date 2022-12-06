@@ -18,6 +18,10 @@ func (tl *Toplevel) SetTitle(title string) {
 	tl.display.Enqueue(tl.obj.SetTitle(title))
 }
 
+func (tl *Toplevel) Move(seat *wl.Seat, serial uint32) {
+	tl.display.Enqueue(tl.obj.Move(seat.Object().ID(), serial))
+}
+
 type toplevelListener struct {
 	tl *Toplevel
 }
