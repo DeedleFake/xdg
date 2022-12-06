@@ -1,18 +1,25 @@
 package xdg
 
-import wl "deedles.dev/wl/client"
+import (
+	wl "deedles.dev/wl/client"
+	"deedles.dev/wl/wire"
+)
 
 type Surface struct {
 	Configure func()
 
-	id[surfaceObject]
+	obj     surfaceObject
 	display *wl.Display
+}
+
+func (s *Surface) Object() wire.Object {
+	return &s.obj
 }
 
 func (s *Surface) GetToplevel() *Toplevel {
 	tl := Toplevel{display: s.display}
 	tl.obj.listener = toplevelListener{tl: &tl}
-	s.display.AddObject(&tl.obj)
+	s.display.AddObject(&tl)
 
 	s.display.Enqueue(s.obj.GetToplevel(tl.obj.id))
 

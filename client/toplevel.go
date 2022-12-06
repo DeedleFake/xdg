@@ -1,10 +1,17 @@
 package xdg
 
-import wl "deedles.dev/wl/client"
+import (
+	wl "deedles.dev/wl/client"
+	"deedles.dev/wl/wire"
+)
 
 type Toplevel struct {
-	id[toplevelObject]
+	obj     toplevelObject
 	display *wl.Display
+}
+
+func (tl *Toplevel) Object() wire.Object {
+	return &tl.obj
 }
 
 func (tl *Toplevel) SetTitle(title string) {

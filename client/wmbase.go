@@ -1,9 +1,12 @@
 package xdg
 
-import wl "deedles.dev/wl/client"
+import (
+	wl "deedles.dev/wl/client"
+	"deedles.dev/wl/wire"
+)
 
 type WmBase struct {
-	id[wmBaseObject]
+	obj     wmBaseObject
 	display *wl.Display
 }
 
@@ -14,7 +17,7 @@ func IsWmBase(i wl.Interface) bool {
 func BindWmBase(display *wl.Display, name uint32) *WmBase {
 	wm := WmBase{display: display}
 	wm.obj.listener = wmBaseListener{wm: &wm}
-	display.AddObject(&wm.obj)
+	display.AddObject(&wm)
 
 	registry := display.GetRegistry()
 	registry.Bind(name, wmBaseInterface, wmBaseVersion, wm.obj.id)
@@ -22,12 +25,16 @@ func BindWmBase(display *wl.Display, name uint32) *WmBase {
 	return &wm
 }
 
+func (wm *WmBase) Object() wire.Object {
+	return &wm.obj
+}
+
 func (wm *WmBase) GetXdgSurface(surface *wl.Surface) *Surface {
 	s := Surface{display: wm.display}
 	s.obj.listener = surfaceListener{surface: &s}
-	wm.display.AddObject(&s.obj)
+	wm.display.AddObject(&s)
 
-	wm.display.Enqueue(wm.obj.GetXdgSurface(s.obj.id, surface.ID()))
+	wm.display.Enqueue(wm.obj.GetXdgSurface(s.obj.id, surface.Object().ID()))
 
 	return &s
 }
