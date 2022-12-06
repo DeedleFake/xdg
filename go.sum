@@ -1,4 +1,4 @@
-deedles.dev/wl v0.0.0-20221206021917-c5dfc8133170 h1:FfW9t6LQtUQjaOyB+MD7AIAOwOTXoFE7g9dO32Mz+yA=
-deedles.dev/wl v0.0.0-20221206021917-c5dfc8133170/go.mod h1:lrhFbe3Zr6Mcc77xeUdIO2LiBPF1hkRidCrEDE2wi38=
+deedles.dev/wl v0.0.0-20221206054437-ffedb203e68f h1:wnSSbPmJCsNUtbR9TKS1cU3Gw66Jv4T8LvBVQREZVf0=
+deedles.dev/wl v0.0.0-20221206054437-ffedb203e68f/go.mod h1:NXBErQ/an1oVcsShIzyJw16+xaaIOfZdyxA0jMBDes0=
 golang.org/x/sys v0.3.0 h1:w8ZOecv6NaNa/zC8944JTU3vz4u6Lagfk4RPQxv92NQ=
 golang.org/x/sys v0.3.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
