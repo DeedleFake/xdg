@@ -6,6 +6,9 @@ import (
 )
 
 type Toplevel struct {
+	Close           func()
+	ConfigureBounds func(width, height int32)
+
 	obj     toplevelObject
 	display *wl.Display
 }
@@ -31,11 +34,15 @@ func (lis toplevelListener) Configure(width, height int32, states []byte) {
 }
 
 func (lis toplevelListener) Close() {
-	// TODO
+	if lis.tl.Close != nil {
+		lis.tl.Close()
+	}
 }
 
 func (lis toplevelListener) ConfigureBounds(width, height int32) {
-	// TODO
+	if lis.tl.ConfigureBounds != nil {
+		lis.tl.ConfigureBounds(width, height)
+	}
 }
 
 func (lis toplevelListener) WmCapabilities(capabilities []byte) {
